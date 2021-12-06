@@ -72,7 +72,7 @@ class SupConDataset(torch.utils.data.Dataset):
         img = [img_1, img_2]
         return {"image": img, "target": label}
 
-"""
+
 dic = make_datapath_dic("train")
 transform = ImageTransform(300)
 train_dataset = SupConDataset(dic, transform=transform, phase="train")
@@ -102,4 +102,3 @@ def image_show(train_loader,n):
     plt.show()
 
 image_show(train_loader,10)
-"""
