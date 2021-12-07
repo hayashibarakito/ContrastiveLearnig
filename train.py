@@ -63,7 +63,6 @@ def train_epoch(model, loader, criterion, optimizer, scheduler, epoch):
         scheduler.step()
 
         losses.update(loss.item(), bsz)
-        print(f"Train EPOCH:{epoch} - Loss{losses.avg:0.4f}")
         
     return losses.avg
 
@@ -72,7 +71,7 @@ if __name__ == '__main__':
     #パラメーター
     DEVICE = ('cuda' if torch.cuda.is_available() else 'cpu')
     EPOCHS = 100
-    BATCH = 32    
+    BATCH = 64
 
     dic = make_datapath_dic("train")
     transform = ImageTransform(300)
@@ -95,8 +94,7 @@ if __name__ == '__main__':
     for epoch in range(EPOCHS):
         train_loss = train_epoch(model, train_loader, criterion, optimizer, scheduler, epoch)
         x_epoch_data.append(epoch)
-        y_train_loss_data.append(train_loss)
-        #print(x_epoch_data[epoch],y_train_loss_data.append(train_loss))
+        print("epoch:",epoch,"train_loss",train_loss)
 
     model_name = str(y_train_loss_data[-1]) + '.pth'
     torch.save(model.state_dict(), model_name)

@@ -64,7 +64,7 @@ class SupConDataset(torch.utils.data.Dataset):
             if idx < self.bins[i]:
                 label = i
                 break
-        img = Image.open(path)
+        img = Image.open(path).convert('RGB')
         # 参考
         # https://github.com/HobbitLong/SupContrast/blob/8d0963a7dbb1cd28accb067f5144d61f18a77588/util.py#L9
         img_1 = self.transform(img, self.phase)
