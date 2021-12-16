@@ -84,3 +84,5 @@ if __name__ == '__main__':
     model_name = str(y_train_loss_data[-1]) + '.pth'
     torch.save(model.state_dict(), model_name)
     print(f'Saved model as {model_name}')
+
+#git push -f origin master
