@@ -8,7 +8,7 @@ from dataset import *
 from loss import *
 from model import *
 
-def train_epoch(model, loader, criterion, optimizer, scheduler, epoch):
+def train_epoch(model, loader, criterion, optimizer, epoch):
     
     running_loss = 0.
     model.train()
@@ -43,8 +43,8 @@ if __name__ == '__main__':
 
     #パラメーター
     DEVICE = ('cuda' if torch.cuda.is_available() else 'cpu')
-    EPOCHS = 10
-    BATCH = 32
+    EPOCHS = 30
+    BATCH = 64
 
     dic = make_datapath_dic("train")
     transform = ImageTransform(300)
@@ -56,7 +56,7 @@ if __name__ == '__main__':
     model = model.to(DEVICE)
 
     criterion = SupConLoss()
-    optimizer = torch.optim.AdamW(model.parameters(), lr=1.0e-03, weight_decay=1.0e-02)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=0.5, weight_decay=1.0e-02)
     scheduler = lr_scheduler.OneCycleLR(optimizer, epochs=EPOCHS, steps_per_epoch=len(train_loader),
                                         max_lr=1.0e-3, pct_start=0.1, anneal_strategy='cos',
                                         div_factor=1.0e+3, final_div_factor=1.0e+3
@@ -65,7 +65,7 @@ if __name__ == '__main__':
     y_train_loss_data = []
     
     for epoch in range(EPOCHS):
-        train_loss = train_epoch(model, train_loader, criterion, optimizer, scheduler, epoch)
+        train_loss = train_epoch(model, train_loader, criterion, optimizer, epoch)
         x_epoch_data.append(epoch)
         y_train_loss_data.append(train_loss)
         scheduler.step()

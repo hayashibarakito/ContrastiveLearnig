@@ -9,7 +9,7 @@ from gaussian_blur import GaussianBlur
 from torch.utils.data import Dataset,DataLoader
 
 def make_datapath_dic(phase='train'):
-    root_path = './flickr-500/' + phase
+    root_path = './flickr-1000/' + phase
     class_list = os.listdir(root_path)
     class_list = [class_name for class_name in class_list if not class_name.startswith('.')]
     datapath_dic = {}
@@ -31,7 +31,8 @@ class ImageTransform():
                                                 transforms.RandomApply([color_jitter], p=0.8),
                                                 transforms.RandomGrayscale(p=0.2),
                                                 GaussianBlur(kernel_size=int(0.1 * size)),
-                                                transforms.ToTensor()
+                                                transforms.ToTensor(),
+                                                transforms.Normalize((0.5, 0.5, 0.5), (0.2, 0.2, 0.2))
                                     ]),
                                     'test':     transforms.Compose([
                                                 transforms.ToTensor(),
