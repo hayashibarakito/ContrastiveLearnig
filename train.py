@@ -85,4 +85,4 @@ if __name__ == '__main__':
     torch.save(model.state_dict(), model_name)
     print(f'Saved model as {model_name}')
 
-#git push -f origin master
+#git push -f origin main
