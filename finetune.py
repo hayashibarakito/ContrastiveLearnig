@@ -15,6 +15,7 @@ def train(model, train_loader, criterion, optimizer, epoch):
     for batch_idx, (input, _, label) in enumerate(train_loader):
 
         input = input.to(DEVICE)
+        label = label.to(DEVICE)
         optimizer.zero_grad()
         output = model(input)
         loss = criterion(output, label)
@@ -39,7 +40,7 @@ if __name__ == '__main__':
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
     
     DEVICE = ('cuda' if torch.cuda.is_available() else 'cpu')
-    EPOCHS = 20
+    EPOCHS = 10
     model = resnet.resnet18(pretrained=True)
     model.fc = nn.Linear(512,10)
     model = model.to(DEVICE)
@@ -67,7 +68,7 @@ if __name__ == '__main__':
         x_epoch_data.append(epoch)
         y_train_loss_data.append(loss_epoch)
 
-        if epoch > 9:
+        if epoch > 4:
             # unfreeze all layers
             for param in model.parameters():
                 param.requires_grad = True
